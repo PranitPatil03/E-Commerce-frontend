@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import ProductList  from './features/product-list/ProductList';
 import Home from './pages/Home';
 import LoginPage  from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -11,9 +10,10 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import Cart from './features/cart/Cart';
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
+import ProductDetails from './features/product-list/components/productDetails';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 
 const router = createBrowserRouter([
   {
@@ -36,17 +36,16 @@ const router = createBrowserRouter([
     path: "/checkout",
     element:(<Checkout/>),
   },
+  {
+    path: "/product-details",
+    element:(<ProductDetailsPage/>),
+  },
 ]);
 
 
 function App() {
   return (
     <div className="App">
-    {/*
-      <Home/>
-      <LoginPage/>
-      <SignupPage/>
-    */}
       <RouterProvider router={router} />
     </div>
   );
