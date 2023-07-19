@@ -5,14 +5,38 @@ import Home from './pages/Home';
 import LoginPage  from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (<Home/>),
+  },
+  {
+    path: "/login",
+    element:(<LoginPage/>),
+  },
+  {
+    path: "/signup",
+    element:(<SignupPage/>),
+  },
+]);
+
+
 function App() {
   return (
     <div className="App">
     {/*
       <Home/>
       <LoginPage/>
+      <SignupPage/>
     */}
-    <SignupPage/>
+      <RouterProvider router={router} />
     </div>
   );
 }
