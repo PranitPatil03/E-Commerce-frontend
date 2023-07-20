@@ -205,6 +205,13 @@ export default function ProductList() {
     dispatch(fetchProductsByFiltersAsync(newFilter))
   }
 
+  const handleSort =(e,option)=>{
+    const newFilter ={...filters,_sort:option.sort,_order:option.order}
+    setFilter(newFilter)
+    dispatch(fetchProductsByFiltersAsync(newFilter))
+  }
+  
+
   useEffect(() => {
     dispatch(fetchAllProductsAsync());
   }, [dispatch]);
@@ -354,8 +361,8 @@ export default function ProductList() {
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
+                            <p
+                              onClick={(e) =>handleSort(e,option)}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -365,7 +372,7 @@ export default function ProductList() {
                               )}
                             >
                               {option.name}
-                            </a>
+                            </p>
                           )}
                         </Menu.Item>
                       ))}
