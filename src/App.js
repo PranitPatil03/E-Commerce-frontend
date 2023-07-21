@@ -22,6 +22,8 @@ import Start from './pages/Start';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import UserOrders from './features/user/components/UserOrders';
 import UserProfile from './features/user/components/UserProfile';
+import UserOrdersPage from './pages/UserOrdersPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -58,11 +60,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/orders",
-    element:<UserOrders></UserOrders>
+    element:<UserOrdersPage></UserOrdersPage>
   },
   {
     path: "/profile",
-    element:<UserProfile></UserProfile>
+    element:<UserProfilePage></UserProfilePage>
   },
   {
     path: "*",
