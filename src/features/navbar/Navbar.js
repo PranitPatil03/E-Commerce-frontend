@@ -26,9 +26,9 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: 'My Profile', link: '/profile' },
-  { name: 'My Orders', link: '/orders' },
-  { name: 'Sign out', link: '/login' },
+  { name: "My Profile", link: "/profile" },
+  { name: "My Orders", link: "/orders" },
+  { name: "Sign out", link: "/logout" },
 ];
 
 function classNames(...classes) {
@@ -36,8 +36,7 @@ function classNames(...classes) {
 }
 
 function Navbar({ children }) {
-
-  const items=useSelector(selectItems)
+  const items = useSelector(selectItems);
 
   return (
     <>
@@ -51,9 +50,9 @@ function Navbar({ children }) {
                     <div className="flex-shrink-0">
                       <Link to="/">
                         <img
-                        className="h-8 w-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
+                          className="h-8 w-8"
+                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                          alt="Your Company"
                         />
                       </Link>
                     </div>
@@ -91,9 +90,11 @@ function Navbar({ children }) {
                           />
                         </button>
                       </Link>
-                      { items.length>0 && <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      {items.length}
-                    </span>}
+                      {items.length > 0 && (
+                        <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                          {items.length}
+                        </span>
+                      )}
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -120,7 +121,7 @@ function Navbar({ children }) {
                             {userNavigation.map((item) => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
-                                  <Link 
+                                  <Link
                                     to={item.link}
                                     className={classNames(
                                       active ? "bg-gray-100" : "",
@@ -205,9 +206,11 @@ function Navbar({ children }) {
                         />
                       </button>
                     </Link>
-                    { items.length>0 && <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                      {items.length}
-                    </span>}
+                    {items.length > 0 && (
+                      <span className="inline-flex items-center rounded-md bg-red-50 mb-7 -ml-3 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        {items.length}
+                      </span>
+                    )}
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (

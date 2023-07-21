@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { selectLoggedInUser, createUserAsync } from '../authSlice';
+import { selectLoggedInUser, createUserAsync } from "../authSlice";
 
 import { Link } from "react-router-dom";
 
@@ -95,7 +95,7 @@ export default function Signup() {
                 </label>
                 <div className="text-sm">
                   <a
-                    href="#"
+                    href="/"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?

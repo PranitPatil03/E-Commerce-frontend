@@ -1,88 +1,112 @@
-import React ,{useEffect} from 'react';
-import './App.css';
-import Home from './pages/Home';
-import LoginPage  from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import "./App.css";
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createBrowserRouter,
   RouterProvider,
   Route,
   Link,
 } from "react-router-dom";
-import CartPage from './pages/CartPage';
-import Checkout from './pages/Checkout';
-import ProductDetails from './features/product-list/components/productDetails';
-import ProductDetailsPage from './pages/ProductDetailsPage';
-import Protected from './features/auth/components/Protected';
-import { fetchAllProductByIdAsync } from './features/product-list/productSlice';
-import { selectLoggedInUser } from './features/auth/authSlice';
-import PageNotFound from './pages/PageNotFound';
-import Start from './pages/Start';
-import OrderSuccessPage from './pages/OrderSuccessPage';
-import UserOrders from './features/user/components/UserOrders';
-import UserProfile from './features/user/components/UserProfile';
-import UserOrdersPage from './pages/UserOrdersPage';
-import UserProfilePage from './pages/UserProfilePage';
+import CartPage from "./pages/CartPage";
+import Checkout from "./pages/Checkout";
+import ProductDetails from "./features/product-list/components/productDetails";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
+import Protected from "./features/auth/components/Protected";
+import { fetchAllProductByIdAsync } from "./features/product-list/productSlice";
+import { selectLoggedInUser } from "./features/auth/authSlice";
+import PageNotFound from "./pages/PageNotFound";
+import Start from "./pages/Start";
+import OrderSuccessPage from "./pages/OrderSuccessPage";
+import UserOrders from "./features/user/components/UserOrders";
+import UserProfile from "./features/user/components/UserProfile";
+import UserOrdersPage from "./pages/UserOrdersPage";
+import UserProfilePage from "./pages/UserProfilePage";
+import Logout from "./features/auth/components/Logout";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Protected><Home/></Protected> 
+    element: (
+      <Protected>
+        <Home />
+      </Protected>
+    ),
   },
   {
     path: "/home",
-    element: <Start></Start>
+    element: <Start></Start>,
   },
   {
     path: "/login",
-    element:(<LoginPage/>),
+    element: <LoginPage />,
   },
   {
     path: "/signup",
-    element:(<SignupPage/>),
+    element: <SignupPage />,
   },
   {
     path: "/cart",
-    element: <Protected><CartPage/></Protected>
+    element: (
+      <Protected>
+        <CartPage />
+      </Protected>
+    ),
   },
   {
     path: "/checkout",
-    element: <Protected><Checkout/></Protected> 
+    element: (
+      <Protected>
+        <Checkout />
+      </Protected>
+    ),
   },
   {
     path: "/product-detail/:id",
-    element:<Protected><ProductDetailsPage/></Protected>
+    element: (
+      <Protected>
+        <ProductDetailsPage />
+      </Protected>
+    ),
   },
   {
     path: "/order-success/:id",
-    element:<OrderSuccessPage></OrderSuccessPage>
+    element: <OrderSuccessPage></OrderSuccessPage>,
   },
   {
     path: "/orders",
-    element:<UserOrdersPage></UserOrdersPage>
+    element: <UserOrdersPage></UserOrdersPage>,
   },
   {
     path: "/profile",
-    element:<UserProfilePage></UserProfilePage>
+    element: <UserProfilePage></UserProfilePage>,
+  },
+  {
+    path: "/logout",
+    element: <Logout></Logout>,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage></ForgotPasswordPage>,
   },
   {
     path: "*",
-    element:<PageNotFound></PageNotFound>
+    element: <PageNotFound></PageNotFound>,
   },
 ]);
 
-
 function App() {
-
   const dispatch = useDispatch();
-  const user =useSelector(selectLoggedInUser)
+  const user = useSelector(selectLoggedInUser);
 
   useEffect(() => {
-    if(user){
-      dispatch(fetchAllProductByIdAsync(user.id))
+    if (user) {
+      dispatch(fetchAllProductByIdAsync(user.id));
     }
-  }, [])
+  }, []);
 
   return (
     <div className="App">
