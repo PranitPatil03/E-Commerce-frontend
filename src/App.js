@@ -20,6 +20,8 @@ import { selectLoggedInUser } from './features/auth/authSlice';
 import PageNotFound from './pages/PageNotFound';
 import Start from './pages/Start';
 import OrderSuccessPage from './pages/OrderSuccessPage';
+import UserOrders from './features/user/components/UserOrders';
+import UserProfile from './features/user/components/UserProfile';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
   {
     path: "/order-success/:id",
     element:<OrderSuccessPage></OrderSuccessPage>
+  },
+  {
+    path: "/orders",
+    element:<UserOrders></UserOrders>
+  },
+  {
+    path: "/profile",
+    element:<UserProfile></UserProfile>
   },
   {
     path: "*",
