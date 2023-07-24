@@ -1,11 +1,5 @@
-import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  increment,
-  incrementAsync,
-  selectError,
-  selectLoggedInUser,
-} from "../authSlice";
+import { selectError, selectLoggedInUser } from "../authSlice";
 import { Link, Navigate } from "react-router-dom";
 import { checkUserAsync } from "../authSlice";
 import { useForm } from "react-hook-form";
@@ -19,8 +13,6 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  console.log(errors);
 
   return (
     <>
@@ -46,8 +38,6 @@ export default function Login() {
               );
             })}
             className="space-y-6"
-            action="#"
-            method="POST"
           >
             <div>
               <label
@@ -107,7 +97,6 @@ export default function Login() {
               </div>
               {error && <p className="text-red-500">{error.message}</p>}
             </div>
-
             <div>
               <button
                 type="submit"

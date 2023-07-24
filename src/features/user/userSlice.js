@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   status: "idle",
-  userInfo: null,
+  userInfo: null, 
 };
 
 export const fetchLoggedInUserOrderAsync = createAsyncThunk(
@@ -37,11 +37,7 @@ export const updateUserAsync = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchLoggedInUserOrderAsync.pending, (state) => {
@@ -68,6 +64,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const selectUserOrders = (state) => state.user?.userInfo?.orders
-export const  selectUserInfo = (state) => state.user.userInfo;
+export const selectUserOrders = (state) => state?.user?.userInfo?.orders;
+
+export const selectUserInfo = (state) => state?.user?.userInfo;
+
 export default userSlice.reducer;

@@ -9,15 +9,18 @@ import { discountedPrice } from '../../../app/constants';
 
 export default function UserOrders() {
   const dispatch = useDispatch();
-  const orders = useSelector(selectUserOrders);
   const userInfo = useSelector(selectUserInfo);
+  const orders = useSelector(selectUserOrders);
+
   useEffect(() => {
-    dispatch(fetchLoggedInUserOrderAsync(userInfo?.id));
-  }, [dispatch,userInfo]);
+    dispatch(fetchLoggedInUserOrderAsync(userInfo.id));
+  }, [dispatch, userInfo]);
+
+  console.log(userInfo,"Line 19")
 
   return (
     <div>
-      {orders?.map((order) => (
+      {orders.map((order) => (
         <div key={order.id}>
           <div>
             <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -29,7 +32,7 @@ export default function UserOrders() {
                   Order Status : {order.status}
                 </h3>
                 <div className="flow-root">
-                  <ul role="list" className="-my-6 divide-y divide-gray-200">
+                  <ul className="-my-6 divide-y divide-gray-200">
                     {order.items.map((item) => (
                       <li key={item.id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -44,7 +47,7 @@ export default function UserOrders() {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={item.href}>{item.title}</a>
+                                <a href={item.product.id}>{item.product.title}</a>
                               </h3>
                               <p className="ml-4">${discountedPrice(item.product)}</p>
                             </div>
@@ -74,7 +77,7 @@ export default function UserOrders() {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex justify-between my-2 text-base font-medium text-gray-900">
                   <p>Subtotal</p>
-                  <p>$ {order.totalCost}</p>
+                  <p>$ {order.totalAmount}</p>
                 </div>
                 <div className="flex justify-between my-2 text-base font-medium text-gray-900">
                   <p>Total Items in Cart</p>
@@ -87,22 +90,22 @@ export default function UserOrders() {
                   <div className="flex gap-x-4">
                     <div className="min-w-0 flex-auto">
                       <p className="text-sm font-semibold leading-6 text-gray-900">
-                        {order?.selectedAddress?.name}
+                        {order.selectedAddress.name}
                       </p>
                       <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {order?.selectedAddress?.street}
+                        {order.selectedAddress.street}
                       </p>
                       <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {order?.selectedAddress?.pinCode}
+                        {order.selectedAddress.pinCode}
                       </p>
                     </div>
                   </div>
                   <div className="hidden sm:flex sm:flex-col sm:items-end">
                     <p className="text-sm leading-6 text-gray-900">
-                      Phone: {order.selectedAddress?.phone}
+                      Phone: {order.selectedAddress.phone}
                     </p>
                     <p className="text-sm leading-6 text-gray-500">
-                      {order.selectedAddress?.city}
+                      {order.selectedAddress.city}
                     </p>
                   </div>
                 </div>

@@ -55,11 +55,7 @@ export const resetCartAsync = createAsyncThunk(
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addToCartAsync.pending, (state) => {
@@ -107,5 +103,5 @@ export const cartSlice = createSlice({
 });
 
 export const selectItems = (state) => state.cart.items;
-
+export const selectCartStatus = (state) => state.cart.status;
 export default cartSlice.reducer;
