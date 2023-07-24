@@ -8,7 +8,6 @@ import {
 import { useForm } from "react-hook-form";
 import {
   selectLoggedInUser,
-  updateUserAsync,
 } from "../features/auth/authSlice";
 import { useState } from "react";
 import {
@@ -16,6 +15,7 @@ import {
   selectCurrentOrder,
 } from "../features/order/orderSlice";
 import { discountedPrice } from "../app/constants";
+import { updateUserAsync } from "../features/user/userSlice";
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function Checkout() {
     formState: { errors },
   } = useForm();
 
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(updateUserAsync);
 
   const handleAddress = (e) => {
     console.log(e.target.value);
@@ -268,7 +268,7 @@ function Checkout() {
                     Choose from Existing addresses
                   </p>
                   <ul role="list">
-                    {user.addresses.map((address, index) => (
+                    {user?.addresses?.map((address, index) => (
                       <li
                         key={index}
                         className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200"
