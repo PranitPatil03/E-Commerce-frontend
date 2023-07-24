@@ -6,36 +6,34 @@ import {
   updateCartAsync,
 } from "../features/cart/cartSlice";
 import { useForm } from "react-hook-form";
-import {
-  selectLoggedInUser,
-} from "../features/auth/authSlice";
 import { useState } from "react";
 import {
   createOrderAsync,
   selectCurrentOrder,
 } from "../features/order/orderSlice";
 import { discountedPrice } from "../app/constants";
-import { updateUserAsync } from "../features/user/userSlice";
+import { selectUserInfo, updateUserAsync } from "../features/user/userSlice";
 
 function Checkout() {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const user = useSelector(selectUserInfo);
+  const currentOrder = useSelector(selectCurrentOrder);
+  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
+
   const totalCost = items.reduce(
     (amount, item) => discountedPrice(item.product) * item.quantity + amount,
     0
   );
-  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
-
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
+    dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
   };
 
   const handleRemove = (e, id) => {
     dispatch(deleteItemFromCartAsync(id));
   };
-
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("cash");
 
   const {
     register,
@@ -43,8 +41,6 @@ function Checkout() {
     reset,
     formState: { errors },
   } = useForm();
-
-  const user = useSelector(updateUserAsync);
 
   const handleAddress = (e) => {
     console.log(e.target.value);
@@ -61,15 +57,13 @@ function Checkout() {
       items,
       totalCost,
       totalItems,
-      user:user.id,
+      user: user.id,
       paymentMethod,
       selectedAddress,
       status: "pending",
     };
     dispatch(createOrderAsync(order));
   };
-
-  const currentOrder = useSelector(selectCurrentOrder);
 
   return (
     <>
@@ -88,12 +82,13 @@ function Checkout() {
               noValidate
               onSubmit={handleSubmit((data) => {
                 console.log(data);
-                dispatch(
-                  updateUserAsync({
-                    ...user,
-                    addresses: [...user.addresses, data],
-                  })
-                );
+                if (user && Array.isArray(user.addresses)) {
+                  dispatch(updateUserAsync({ ...user, addresses: [...user.addresses, data] }));
+                } else {
+                  // If user or user.addresses is not defined or not an array, you can handle it accordingly.
+                  // For example, you can initialize the addresses array if it doesn't exist:
+                  dispatch(updateUserAsync({ ...user, addresses: [data] }));
+                }
                 reset();
               })}
             >
@@ -378,9 +373,13 @@ function Checkout() {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <a href={product.product.thumbnail}>{product.product.title}</a>
+                                <a href={product.product.thumbnail}>
+                                  {product.product.title}
+                                </a>
                               </h3>
-                              <p className="ml-4">${discountedPrice(product.product)}</p>
+                              <p className="ml-4">
+                                ${discountedPrice(product.product)}
+                              </p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {product.product.brand}

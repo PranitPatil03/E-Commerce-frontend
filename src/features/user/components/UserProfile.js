@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo, updateUserAsync } from "../userSlice";
 import { useForm } from "react-hook-form";
-import { selectLoggedInUser } from "../../auth/authSlice";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [showAddAddressForm, setShowAddAddressForm] = useState(false);
   const userInfo = useSelector(selectUserInfo);
@@ -43,7 +41,10 @@ export default function UserProfile() {
   };
 
   const handleAdd = (address) => {
-    const newUser = { ...userInfo, addresses: [...userInfo.addresses, address] };
+    const newUser = {
+      ...userInfo,
+      addresses: [...userInfo.addresses, address],
+    };
     dispatch(updateUserAsync(newUser));
     setShowAddAddressForm(false);
   };
@@ -56,10 +57,9 @@ export default function UserProfile() {
             Name: {userInfo?.name ? userInfo?.name : "New User"}
           </h1>
           <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">
-            email address : {user?.email}
+            email address : {userInfo?.email}
           </h3>
-          {
-            userInfo?.role === 'admin' && (
+          {userInfo?.role === "admin" && (
             <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">
               role : {userInfo.role}
             </h3>
