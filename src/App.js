@@ -3,7 +3,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import { useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,12 +12,12 @@ import {
 } from "react-router-dom";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
-import ProductDetails from "./features/product-list/components/productDetails";
+import ProductDetails from "./features/product/components/productDetails";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import AdminProductDetailPage from "./pages/AdminProductDetailsPage";
 import Protected from "./features/auth/components/Protected";
 import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
-import { fetchAllProductByIdAsync } from "./features/product-list/productSlice";
+import { fetchAllProductByIdAsync } from "./features/product/productSlice";
 import { selectLoggedInUser } from "./features/auth/authSlice";
 import PageNotFound from "./pages/PageNotFound";
 import Start from "./pages/Start";
@@ -32,6 +32,8 @@ import AdminHome from "./pages/AdminHome";
 import ProductForm from "./features/admin/components/ProductForm";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
+import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
+import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 
 const router = createBrowserRouter([
   {
@@ -162,14 +164,18 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchAllProductByIdAsync(user.id));
+      dispatch(fetchItemsByUserIdAsync(user.id));
+      dispatch(fetchLoggedInUserAsync(user.id));
     }
-  }, []);
+  }, [dispatch, user]);
 
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <>
+      <div className="App">
+        <RouterProvider router={router} />
+        {/* Link must be inside the Provider */}
+      </div>
+    </>
   );
 }
 
