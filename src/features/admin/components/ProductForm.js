@@ -2,7 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { clearSelectedProduct, createProductAsync, fetchAllProductByIdAsync, selectBrands, selectCategories, selectProductById, updateProductAsync } from "../../product/productSlice";
+import {
+  clearSelectedProduct,
+  createProductAsync,
+  fetchAllProductByIdAsync,
+  selectBrands,
+  selectCategories,
+  selectProductById,
+  updateProductAsync,
+} from "../../product/productSlice";
 
 function ProductForm() {
   const {

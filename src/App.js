@@ -164,8 +164,8 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchItemsByUserIdAsync(user.id));
-      dispatch(fetchLoggedInUserAsync(user.id));
+      dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchLoggedInUserAsync());
     }
   }, [dispatch, user]);
 
@@ -173,7 +173,6 @@ function App() {
     <>
       <div className="App">
         <RouterProvider router={router} />
-        {/* Link must be inside the Provider */}
       </div>
     </>
   );

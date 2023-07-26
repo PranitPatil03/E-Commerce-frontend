@@ -147,7 +147,9 @@ function AdminOrders() {
                     </td>
                     <td className="py-3 px-6 text-center">
                       <div className="">
-                        <div><strong>{order.selectedAddress.name}</strong></div>
+                        <div>
+                          <strong>{order.selectedAddress.name}</strong>
+                        </div>
                         <div>{order.selectedAddress.street},</div>
                         <div>{order.selectedAddress.city}, </div>
                         <div>{order.selectedAddress.state}, </div>

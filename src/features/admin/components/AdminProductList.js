@@ -198,7 +198,10 @@ export default function AdminProductList() {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 <div className="mt-5">
-                  <Link to="/admin/product-form" className="rounded-md bg-green-600 mx-10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  <Link
+                    to="/admin/product-form"
+                    className="rounded-md bg-green-600 mx-10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
                     Add New Product
                   </Link>
                 </div>
