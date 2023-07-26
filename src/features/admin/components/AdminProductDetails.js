@@ -3,12 +3,11 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllProductByIdAsync,
+  fetchProductByIdAsync,
   selectProductById,
 } from "../../product/productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../cart/cartSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountedPrice } from "../../../app/constants";
 
 const colors = [
@@ -16,7 +15,6 @@ const colors = [
   { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
   { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
 ];
-
 const sizes = [
   { name: "XXS", inStock: false },
   { name: "XS", inStock: true },
@@ -42,31 +40,27 @@ function classNames(...classes) {
 export default function AdminProductDetail() {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
-  const user = useSelector(selectLoggedInUser);
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
   const params = useParams();
 
-  useEffect(() => {
-    dispatch(fetchAllProductByIdAsync(params.id));
-  }, [dispatch, params.id]);
-
   const handleCart = (e) => {
     e.preventDefault();
-    const newItem = { ...product, quantity: 1, user: user.id };
+    const newItem = { ...product, quantity: 1 };
     delete newItem["id"];
     dispatch(addToCartAsync(newItem));
   };
+
+  useEffect(() => {
+    dispatch(fetchProductByIdAsync(params.id));
+  }, [dispatch, params.id]);
 
   return (
     <div className="bg-white">
       {product && (
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
-            <ol
-              role="list"
-              className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-            >
+            <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
               {product.breadcrumbs &&
                 product.breadcrumbs.map((breadcrumb) => (
                   <li key={breadcrumb.id}>
@@ -147,7 +141,7 @@ export default function AdminProductDetail() {
             {/* Options */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl line-through tracking-tight text-gray-900">
+              <p className="text-xl line-through tracking-tight text-gray-900">
                 ${product.price}
               </p>
               <p className="text-3xl tracking-tight text-gray-900">

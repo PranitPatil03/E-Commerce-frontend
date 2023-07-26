@@ -2,17 +2,24 @@ import { Fragment, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteItemFromCartAsync,
+  selectCartLoaded,
+  selectCartStatus,
   selectItems,
   updateCartAsync,
 } from "./cartSlice";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { discountedPrice } from "../../app/constants";
+import { Grid } from "react-loader-spinner";
+import Modal from "../../common/Modal";
 
 export default function Cart() {
   const dispatch = useDispatch();
 
   const items = useSelector(selectItems);
+  const status = useSelector(selectCartStatus);
+  const cartLoaded = useSelector(selectCartLoaded);
+  const [openModal, setOpenModal] = useState(null);
 
   const totalAmount = items.reduce(
     (amount, item) => discountedPrice(item.product) * item.quantity + amount,
@@ -30,7 +37,9 @@ export default function Cart() {
 
   return (
     <>
-      {!items.length && <Navigate to="/" replace={true}></Navigate>}
+      {!items.length && cartLoaded && (
+        <Navigate to="/" replace={true}></Navigate>
+      )}
 
       <div>
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -39,6 +48,18 @@ export default function Cart() {
               Cart
             </h1>
             <div className="flow-root">
+              {status === "loading" ? (
+                <Grid
+                  height="80"
+                  width="80"
+                  color="rgb(79, 70, 229) "
+                  ariaLabel="grid-loading"
+                  radius="12.5"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              ) : null}
               <ul className="-my-6 divide-y divide-gray-200">
                 {items.map((item) => (
                   <li key={item.id} className="flex py-6">
@@ -85,8 +106,19 @@ export default function Cart() {
                         </div>
 
                         <div className="flex">
+                          <Modal
+                            title={`Delete ${item.product.title}`}
+                            message="Are you sure you want to delete this Cart item ?"
+                            dangerOption="Delete"
+                            cancelOption="Cancel"
+                            dangerAction={(e) => handleRemove(e, item.id)}
+                            cancelAction={() => setOpenModal(null)}
+                            showModal={openModal === item.id}
+                          ></Modal>
                           <button
-                            onClick={handleRemove}
+                            onClick={(e) => {
+                              setOpenModal(item.id);
+                            }}
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                           >
