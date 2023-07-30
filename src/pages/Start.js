@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../features/navbar/Navbar";
 
 function Start() {
-  return (
+  return (  
     <>
       <Navbar />
       <div className="relative overflow-hidden bg-white">
